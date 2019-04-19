@@ -27,7 +27,14 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     respond_to do |format|
-      if @book.save
+      if @book.invalid?
+        format.html { render :new }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      elsif params[:confirm]
+        format.html { render :new_confirm }
+      elsif params[:back]
+        format.html { render :new }
+      elsif @book.save
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
@@ -40,8 +47,17 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
+    @book.assign_attributes(book_params)
+
     respond_to do |format|
-      if @book.update(book_params)
+      if @book.invalid?
+        format.html { render :edit }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      elsif params[:confirm]
+        format.html { render :edit_confirm }
+      elsif params[:back]
+        format.html { render :edit }
+      elsif @book.save
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
       else

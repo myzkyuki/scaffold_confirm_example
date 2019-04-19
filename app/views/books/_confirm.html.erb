@@ -13,15 +13,18 @@
 
   <div class="field">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= book.title %>
+    <%= form.hidden_field :title %>
   </div>
 
   <div class="field">
     <%= form.label :author %>
-    <%= form.text_field :author %>
+    <%= book.author %>
+    <%= form.hidden_field :author %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Confirm', name: 'confirm' %>
+    <%= form.submit 'Back', name: 'back' %>
+    <%= form.submit %>
   </div>
 <% end %>
