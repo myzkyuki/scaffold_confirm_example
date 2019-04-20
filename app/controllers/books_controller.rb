@@ -27,10 +27,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     respond_to do |format|
-      if @book.invalid?
-        format.html { render :new }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      elsif params[:confirm]
+      if @book.valid? && params[:confirm]
         format.html { render :new_confirm }
       elsif params[:back]
         format.html { render :new }
@@ -50,10 +47,7 @@ class BooksController < ApplicationController
     @book.assign_attributes(book_params)
 
     respond_to do |format|
-      if @book.invalid?
-        format.html { render :edit }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      elsif params[:confirm]
+      if @book.valid? && params[:confirm]
         format.html { render :edit_confirm }
       elsif params[:back]
         format.html { render :edit }
